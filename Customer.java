@@ -31,7 +31,7 @@ public class Customer {
 
         double totalCost = 0;
         int frequentRenterPoints = 0;
-        String result = "Rental Record for " + getName() + "\n";
+        String rentalRecord = "Rental Record for " + getName() + "\n";
 
         for(Rental rental : _rentals){
 
@@ -43,15 +43,15 @@ public class Customer {
             frequentRenterPoints = 1 + rental.getPointBonus();
 
             // show figures for this rental
-            result += "\t" + rental.getMovieTitle() + "\t" + String.valueOf(rentalCost) + "\n";
+            rentalRecord += "\t" + rental.getMovieTitle() + "\t" + String.valueOf(rentalCost) + "\n";
             totalCost += rentalCost;
 
         }
 
         // add footer lines
-        result += "Amount owed is " + totalCost + "\n";
-        result += "You earned " + frequentRenterPoints + " frequent renter points";
-        return result;
+        rentalRecord += "Amount owed is " + totalCost + "\n";
+        rentalRecord += "You earned " + frequentRenterPoints + " frequent renter points";
+        return rentalRecord;
     }
 
     public String generateXMLStatement(){
@@ -60,25 +60,25 @@ public class Customer {
         int frequentRenterPoints = 0;
 
         // Add doctype
-        String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-        result += "<statement>\n";
-        result += "\t<name>" + this._name + "</name>";
-        result += "\t<rentals>\n";
+        String rentalRecord = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        rentalRecord += "<statement>\n";
+        rentalRecord += "\t<name>" + this._name + "</name>";
+        rentalRecord += "\t<rentals>\n";
         for (Rental rental : _rentals) {
             totalCost += rental.getRentalCost();
             frequentRenterPoints += rental.getPointBonus() + 1;
-            result += 
+            rentalRecord += 
                 "\t\t<rental>\n"+
                 "\t\t\t<movie>" + rental.getMovieTitle() + "</movie>\n" +
                 "\t\t\t<days>" + rental.getDaysRented() + "</days>\n" +
                 "\t\t\t<cost>" + rental.getRentalCost() + "</cost>\n" +
                 "\t\t</rental>\n";
         }
-        result += "\t</rentals>\n";
-        result += "\t<total>" + totalCost + "</total>\n";
-        result += "\t<points>" + frequentRenterPoints + "</points>\n";
-        result += "</statement>\n";
-        return result;
+        rentalRecord += "\t</rentals>\n";
+        rentalRecord += "\t<total>" + totalCost + "</total>\n";
+        rentalRecord += "\t<points>" + frequentRenterPoints + "</points>\n";
+        rentalRecord += "</statement>\n";
+        return rentalRecord;
     }
 
 }
