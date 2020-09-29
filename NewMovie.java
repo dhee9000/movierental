@@ -1,5 +1,3 @@
-import javax.swing.text.DefaultStyledDocument.ElementSpec;
-
 // New Movie class
 public class NewMovie extends Movie {
 
