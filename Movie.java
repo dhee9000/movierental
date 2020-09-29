@@ -7,59 +7,16 @@
  * 
  */
 
-public class Movie {
-
-    /**
-     * enumerated data type for typeOfFilm
-     */
-
-    public enum typeOfFilm {
-        REGULAR(0),
-        NEW_RELEASE(1),
-        CHILDRENS(2);
-
-        private int value;
-        private typeOfFilm(int value) {
-        this.value = value;
-      }
-
-     /**
-     * Constants for _priceCode
-     */
-/*
-    public static final int CHILDRENS   = 2;
-    public static final int REGULAR     = 0;
-    public static final int NEW_RELEASE = 1;
-*/
-
-
+public abstract class Movie {
+    
     private String _title;
-    private int    _priceCode;
     
     /**
      * Constructor
      * @param title (required) title of the movie.
-     * @param priceCode (required) priceCode associated with the movie
      */
-    public Movie(String title, int priceCode) {
+    public Movie(String title) {
         _title = title;
-        _priceCode = priceCode;
-    }
-    
-    /**
-     * Returns price code associated with the movie.
-     * @return priceCode associated with the movie.
-     */
-    public int getPriceCode() {
-        return _priceCode;
-    }
-    
-    /**
-     * Sets the price code of a movie.
-     * @param newPriceCode (required) the price code to be set on this movie.
-     */
-    public void setPriceCode(int newPriceCode) {
-        _priceCode = newPriceCode;
     }
     
     /**
@@ -70,10 +27,19 @@ public class Movie {
         return _title;
     }
 
-    // total cost of film including days rented
-    public double findCost(double costOfFilm, int daysRented, Movie mov) {
-        
-        double totalCost = costOfFilm * daysRented;
-    	return totalCost;
+    /**
+     * Calculates rental cost based on daysRented
+     * @param daysRented (required) number of days the movie was rented.
+     * @return rental cost based on daysRented
+     */
+    public abstract float calculateRentalCost(int daysRented);
+
+    /**
+     * Calculates point bonus to be awarded based on daysRented
+     * @param daysRented (required) number of days the movie was rented.
+     * @return point bonus based on daysRented
+     */
+    public int calculatePointBonus(int daysRented){
+        return 0;
     }
 }
