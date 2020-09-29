@@ -14,7 +14,9 @@ public class Main {
         person.addRental(secondRental);
         person.addRental(thirdRental);
 
-        System.out.println(Customer.generateStatement);
+        System.out.println(person.generateStatement());
+        System.out.println(person.generateXMLStatement());
+
 
 
     }
