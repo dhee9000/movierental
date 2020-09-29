@@ -1,26 +1,45 @@
-public class Movie {
+/**
+ * Movie.java
+ * 
+ * Movie Object
+ * 
+ * <P>Stores information about instances of movies.
+ * 
+ */
 
-    public static final int CHILDRENS   = 2;
-    public static final int REGULAR     = 0;
-    public static final int NEW_RELEASE = 1;
+public abstract class Movie {
     
     private String _title;
-    private int    _priceCode;
     
-    public Movie(String title, int priceCode) {
+    /**
+     * Constructor
+     * @param title (required) title of the movie.
+     */
+    public Movie(String title) {
         _title = title;
-        _priceCode = priceCode;
     }
     
-    public int getPriceCode() {
-        return _priceCode;
-    }
-    
-    public void setPriceCode(int arg) {
-        _priceCode = arg;
-    }
-    
+    /**
+     * Returns the title of the movie
+     * @return title of the movie.
+     */
     public String getTitle() {
         return _title;
+    }
+
+    /**
+     * Calculates rental cost based on daysRented
+     * @param daysRented (required) number of days the movie was rented.
+     * @return rental cost based on daysRented
+     */
+    public abstract float calculateRentalCost(int daysRented);
+
+    /**
+     * Calculates point bonus to be awarded based on daysRented
+     * @param daysRented (required) number of days the movie was rented.
+     * @return point bonus based on daysRented
+     */
+    public int calculatePointBonus(int daysRented){
+        return 0;
     }
 }
