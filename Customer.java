@@ -8,14 +8,12 @@
  * 
  */
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 public class Customer {
 
     private String _name;
     private Vector<Rental> _rentals = new Vector<Rental>();
-    int frequentRenterPoints;
 
     public Customer(String name) {
         _name = name;
@@ -29,42 +27,58 @@ public class Customer {
         return _name;
     }
 
-    public String statement() {
+    public String generateStatement() {
 
-        double totalAmount = 0;
+        double totalCost = 0;
         int frequentRenterPoints = 0;
-        Enumeration<Rental> rentals = _rentals.elements();
         String result = "Rental Record for " + getName() + "\n";
 
-        while (rentals.hasMoreElements()) {
+        for(Rental rental : _rentals){
 
-            double thisAmount = 0;
-            Rental each = (Rental) rentals.nextElement();
+            double rentalCost = 0;
 
             // Add rental cost
-            thisAmount += each.getRentalCost();
-            // Add frequent renter points
-            addFrequentRenterPoints(1);
-            // Add bonus point
-            addFrequentRenterPoints(each.getPointBonus());
+            rentalCost += rental.getRentalCost();
+            // Add frequent renter points and bonus points
+            frequentRenterPoints = 1 + rental.getPointBonus();
 
             // show figures for this rental
-            result += "\t" + each.getMovieTitle() + "\t" + String.valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
+            result += "\t" + rental.getMovieTitle() + "\t" + String.valueOf(rentalCost) + "\n";
+            totalCost += rentalCost;
+
         }
 
         // add footer lines
-        result += "Amount owed is " + totalAmount + "\n";
+        result += "Amount owed is " + totalCost + "\n";
         result += "You earned " + frequentRenterPoints + " frequent renter points";
         return result;
     }
 
-    /**
-     * Adds specified number of frequent renter points to the customer.
-     * @param newPoints (required) number of new points to add.
-     */
-    private void addFrequentRenterPoints(int newPoints) {
-        this.frequentRenterPoints += newPoints;
+    public String generateXMLStatement(){
+        
+        float totalCost = 0;
+        int frequentRenterPoints = 0;
+
+        // Add doctype
+        String result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        result += "<statement>\n";
+        result += "\t<name>" + this._name + "</name>";
+        result += "\t<rentals>\n";
+        for (Rental rental : _rentals) {
+            totalCost += rental.getRentalCost();
+            frequentRenterPoints += rental.getPointBonus() + 1;
+            result += 
+                "\t\t<rental>\n"+
+                "\t\t\t<movie>" + rental.getMovieTitle() + "</movie>\n" +
+                "\t\t\t<days>" + rental.getDaysRented() + "</days>\n" +
+                "\t\t\t<cost>" + rental.getRentalCost() + "</cost>\n" +
+                "\t\t</rental>\n";
+        }
+        result += "\t</rentals>\n";
+        result += "\t<total>" + totalCost + "</total>\n";
+        result += "\t<points>" + frequentRenterPoints + "</points>\n";
+        result += "</statement>\n";
+        return result;
     }
 
 }
