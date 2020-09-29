@@ -29,7 +29,7 @@ public class Customer {
         return _name;
     }
 
-    public String statement() {
+    public String generateStatement() {
 
         double totalAmount = 0;
         int frequentRenterPoints = 0;
